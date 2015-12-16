@@ -14,12 +14,10 @@ end
 # Install haproxy discovery
 install_haproxy_discovery = node['haproxy']['ec2']['install_haproxy_discovery']
 if install_haproxy_discovery
-  template node['haproxy']['ec2']['discovery_chef_erb'] do
-    source 'haproxy/haproxy-discovery.cron.erb'
-  end
-  template node['haproxy']['ec2']['discovery_chef_json'] do
-    source 'haproxy/haproxy-discovery.json.erb'
-  end
+  node.default['commons']['chef-client-cron']['cron_name'] = "haproxy-discovery"
+  node.default['commons']['chef-client-cron']['chef_json_cookbook'] = "alfresco"
+  node.default['commons']['chef-client-cron']['chef_json_source'] = "haproxy/haproxy-discovery.json.erb"
+  include_recipe 'commons::chef-client-cron'
 end
 
 if node['haproxy']['logging_json_enabled']

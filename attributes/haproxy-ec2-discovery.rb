@@ -1,8 +1,5 @@
 default['haproxy']['ec2']['discovery_enabled'] = false
 
-default['haproxy']['ec2']['discovery_chef_erb'] = "/etc/cron.d/haproxy-discovery.cron"
-default['haproxy']['ec2']['discovery_chef_json'] = "/etc/chef/haproxy-discovery.json"
-
 # Following attributes are only used to build haproxy-discovery.json
 #
 # Define it at bootstrap time

@@ -4,7 +4,7 @@ DEPENDENCIES
     metadata: true
   commons
     git: https://github.com/Alfresco/chef-commons.git
-    revision: d67896a11fcd0da79b4ee52e4257e73cf2bbcf06
+    revision: 109b1a6ca17004049b53ea128ee8c74a91b04e20
   file
     git: https://github.com/jenssegers/chef-file.git
     revision: 050c5554efcc024d9a058908280bfb05037f9848
@@ -67,6 +67,8 @@ GRAPH
   chef-sugar (3.2.0)
   chef_handler (1.2.0)
   commons (0.0.1)
+    chef-sugar (>= 3.2.0)
+    line (>= 0.6.3)
     python (>= 1.4.6)
   cpu (0.2.0)
   database (4.0.9)
@@ -79,7 +81,7 @@ GRAPH
     x264 (>= 0.0.0)
     yasm (>= 0.0.0)
   file (2.0.0)
-  git (4.3.4)
+  git (4.3.5)
     build-essential (>= 0.0.0)
     dmg (>= 0.0.0)
     windows (>= 0.0.0)

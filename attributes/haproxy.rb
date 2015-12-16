@@ -1,4 +1,3 @@
-default['haproxy']['ec2']['discover_cron'] = "*/5 * * * *"
 default['haproxy']['ec2']['install_haproxy_discovery'] = false
 
 # Force rsyslog to use UDP on localhost
