@@ -1,12 +1,14 @@
-rvm:
-  - 2.2
+rvm: 2.2
 
-sudo: true
+sudo: required
+services: docker
 
-before_script:
-  - source <(curl -sL https://raw.githubusercontent.com/zuazo/kitchen-in-travis/0.5.0/scripts/start_docker.sh)
+before_install: curl -L https://www.getchef.com/chef/install.sh | sudo bash -s -- -P chefdk -v 0.9.0
+install: chef exec bundle install
+
+before_script: sudo iptables -L DOCKER || sudo iptables -N DOCKER
 
 script:
-  - bundle exec rake
+  - chef exec bundle exec rake
   # Run test-kitchen with docker driver, for example:
-  - bundle exec rake 'integration:travis[community,test]'
+  - KITCHEN_LOCAL_YANL=.kitchen.docker.yml chef exec bundle exec kitchen test community
