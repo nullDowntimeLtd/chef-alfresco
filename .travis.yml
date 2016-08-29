@@ -12,5 +12,4 @@ script:
   - chef exec bundle exec rake
   # Run test-kitchen with docker driver, for example:
   - KITCHEN_LOCAL_YANL=.kitchen.docker.yml chef exec bundle exec kitchen converge community
-  - sleep 60
   - KITCHEN_LOCAL_YANL=.kitchen.docker.yml chef exec bundle exec kitchen verify community
