@@ -5,6 +5,7 @@ module Helpers
     newConnection= Faraday.new(:url => url,
                                :headers => {'Host' => host_inventory['hostname']}) do |faraday|
       faraday.adapter Faraday.default_adapter
+      faraday.options.timeout = 300
     end
     return newConnection
   end
