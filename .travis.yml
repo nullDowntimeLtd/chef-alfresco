@@ -11,4 +11,4 @@ before_script: sudo iptables -L DOCKER || sudo iptables -N DOCKER
 script:
   - chef exec bundle exec rake
   # Run test-kitchen with docker driver, for example:
-  - KITCHEN_LOCAL_YAML=.kitchen.docker.yml chef exec bundle exec kitchen test community
+  - chef exec bundle exec rake 'integration:docker[community,test]'
