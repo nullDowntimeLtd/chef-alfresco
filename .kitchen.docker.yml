@@ -17,7 +17,13 @@ platforms:
       platform: centos
       run_command: /usr/sbin/init
       privileged: true
-
+      forward:
+      - 80:80
+      - 8070:8070
+      - 8081:8081
+      - 8090:8090
+      - 9001:9001
+      - 9000:9000
 
 suites:
   - name: community
