@@ -6,6 +6,7 @@ module Helpers
                                :headers => {'Host' => host_inventory['hostname']}) do |faraday|
       faraday.adapter Faraday.default_adapter
       faraday.options.timeout = 300
+      faraday.options.open_timeout = 300
     end
     return newConnection
   end
