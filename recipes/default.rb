@@ -1,25 +1,25 @@
 # Setting Tomcat version
 # Needs to be done before invoking "tomcat::_attributes"
 # TODO - try using node.default or node.set
-node.override["tomcat"]["base_version"] = 7
+node.override['tomcat']['base_version'] = 7
 
 # Invoke attribute recipes; if defined as attributes/*.rb files,
 # The derived values (ie node['artifacts']['share']['version'] = node['alfresco']['version'])
 # would not take the right value, if a calling cookbook changes (ie default['alfresco']['version'])
 #
-include_recipe "tomcat::_attributes"
-include_recipe "alfresco::_common-attributes"
-include_recipe "alfresco::_tomcat-attributes"
-include_recipe "alfresco::_activiti-attributes"
-include_recipe "alfresco::_alfrescoproperties-attributes"
-include_recipe "alfresco::_repo-attributes"
-include_recipe "alfresco::_share-attributes"
-include_recipe "alfresco::_solr-attributes"
-include_recipe "alfresco::_rm-attributes"
-include_recipe "alfresco::_googledocs-attributes"
-include_recipe "alfresco::_aos-attributes"
-include_recipe "alfresco::_media-attributes"
-include_recipe "alfresco::_analytics-attributes"
+include_recipe 'tomcat::_attributes'
+include_recipe 'alfresco::_common-attributes'
+include_recipe 'alfresco::_tomcat-attributes'
+include_recipe 'alfresco::_activiti-attributes'
+include_recipe 'alfresco::_alfrescoproperties-attributes'
+include_recipe 'alfresco::_repo-attributes'
+include_recipe 'alfresco::_share-attributes'
+include_recipe 'alfresco::_solr-attributes'
+include_recipe 'alfresco::_rm-attributes'
+include_recipe 'alfresco::_googledocs-attributes'
+include_recipe 'alfresco::_aos-attributes'
+include_recipe 'alfresco::_media-attributes'
+include_recipe 'alfresco::_analytics-attributes'
 
 # If there are no components that need artifact deployment,
 # don't invoke apply_amps
@@ -29,7 +29,7 @@ apply_amps = false
 install_activemq = false
 
 # Install/configure awscli, as it's used by haproxy ec2 discovery
-include_recipe "artifact-deployer::awscli"
+include_recipe 'artifact-deployer::awscli'
 
 # [old implementation]
 # Change artifactIds for alfresco and share WARs, if
@@ -37,59 +37,55 @@ include_recipe "artifact-deployer::awscli"
 # enterprise = true if Float(node['alfresco']['version'].split('').last) or node['alfresco']['version'].end_with?("SNAPSHOT") rescue false
 # [New implementation]
 if node['alfresco']['edition'] == 'enterprise'
-  node.default['artifacts']['alfresco']['artifactId'] = "alfresco-enterprise"
-  unless node['alfresco']['version'].start_with?("5.1")
-    node.default['artifacts']['share']['artifactId'] = "share-enterprise"
+  node.default['artifacts']['alfresco']['artifactId'] = 'alfresco-enterprise'
+  unless node['alfresco']['version'].start_with?('5.1')
+    node.default['artifacts']['share']['artifactId'] = 'share-enterprise'
   end
 end
 
-#Chef::Log.warn("this is my condition2 #{node['alfresco']['enable.web.xml.nossl.patch'] or node['alfresco']['edition'] == 'enterprise'}")
-unless node['alfresco']['enable.web.xml.nossl.patch'] or node['alfresco']['edition'] == 'enterprise'
+# Chef::Log.warn("this is my condition2 #{node['alfresco']['enable.web.xml.nossl.patch'] or node['alfresco']['edition'] == 'enterprise'}")
+unless node['alfresco']['enable.web.xml.nossl.patch'] || node['alfresco']['edition'] == 'enterprise'
   node.default['artifacts']['alfresco']['classifier'] = 'nossl'
 end
 
-if node['alfresco']['version'].start_with?("5.1") and node['alfresco']['components'].include? 'repo'
+if node['alfresco']['version'].start_with?('5.1') && node['alfresco']['components'].include?('repo')
   node.default['artifacts']['share-services']['enabled'] = true
-  node.default['artifacts']['ROOT']['artifactId'] = "alfresco-server-root"
+  node.default['artifacts']['ROOT']['artifactId'] = 'alfresco-server-root'
 end
 
-include_recipe "alfresco::package-repositories"
+include_recipe 'alfresco::package-repositories'
 
 if node['alfresco']['components'].include? 'postgresql'
-  include_recipe "alfresco::postgresql-local-server"
+  include_recipe 'alfresco::postgresql-local-server'
 elsif node['alfresco']['components'].include? 'mysql'
-  include_recipe "alfresco::mysql-local-server"
+  include_recipe 'alfresco::mysql-local-server'
 end
 
 include_recipe 'java::default'
 
 if node['alfresco']['components'].include? 'yourkit'
-  include_recipe "alfresco::yourkit"
+  include_recipe 'alfresco::yourkit'
 end
 
 if node['alfresco']['components'].include? 'tomcat'
-  include_recipe "alfresco::tomcat"
+  include_recipe 'alfresco::tomcat'
 end
 
 if node['alfresco']['components'].include? 'nginx'
-  include_recipe "alfresco::nginx"
+  include_recipe 'alfresco::nginx'
 end
 
 if node['alfresco']['components'].include? 'transform'
-  include_recipe "alfresco::transformations"
+  include_recipe 'alfresco::transformations'
 end
 
-if node['alfresco']['components'].include? 'aos'
-  include_recipe "alfresco::aos"
-end
+include_recipe 'alfresco::aos' if node['alfresco']['components'].include? 'aos'
 
 if node['alfresco']['components'].include? 'googledocs'
-  include_recipe "alfresco::googledocs"
+  include_recipe 'alfresco::googledocs'
 end
 
-if node['alfresco']['components'].include? 'rm'
-  include_recipe "alfresco::rm"
-end
+include_recipe 'alfresco::rm' if node['alfresco']['components'].include? 'rm'
 
 if node['media']['install.content.services']
   include_recipe 'alfresco::media-content-services'
@@ -102,104 +98,93 @@ end
 
 if node['alfresco']['components'].include? 'repo'
   apply_amps = true
-  include_recipe "alfresco::repo"
+  include_recipe 'alfresco::repo'
 end
 
 if node['alfresco']['components'].include? 'share'
   apply_amps = true
-  include_recipe "alfresco::share"
+  include_recipe 'alfresco::share'
 end
 
 if node['alfresco']['components'].include? 'solr'
-  include_recipe "alfresco::solr"
+  include_recipe 'alfresco::solr'
 end
-
 
 if node['alfresco']['components'].include? 'haproxy'
   include_recipe 'alfresco::haproxy'
 end
 
 if node['alfresco']['components'].include? 'tomcat'
-  include_recipe "alfresco::tomcat-instance-config"
+  include_recipe 'alfresco::tomcat-instance-config'
 end
 
 if node['alfresco']['components'].include? 'haproxy'
-  include_recipe "openssl::default"
-  include_recipe "alfresco::haproxy"
+  include_recipe 'openssl::default'
+  include_recipe 'alfresco::haproxy'
 end
 
-include_recipe "artifact-deployer::default"
-
-if apply_amps
-  include_recipe "alfresco::apply-amps"
-end
+include_recipe 'artifact-deployer::default'
+include_recipe 'alfresco::apply-amps' if apply_amps
 
 if node['alfresco']['db_ssl_enabled']
   node.default['artifacts']['ssl-db-creds']['enabled'] = true
-  execute "import key to RDS keystore" do
+  execute 'import key to RDS keystore' do
     command "keytool -import -alias RDSmysqlServerCACert -file #{node['artifacts']['ssl-db-creds']['destination']} -keystore #{node['alfresco']['keystore_file']}"
   end
 end
 
 # This must go after Alfresco installation
 if node['alfresco']['components'].include? 'analytics'
-  include_recipe "alfresco::analytics"
+  include_recipe 'alfresco::analytics'
   install_activemq = true
 end
 
-if install_activemq
-  include_recipe 'activemq::default'
-end
+include_recipe 'activemq::default' if install_activemq
 
 if node['alfresco']['components'].include? 'rsyslog'
-  include_recipe "rsyslog::default"
+  include_recipe 'rsyslog::default'
 end
 
 if node['alfresco']['components'].include? 'logstash-forwarder'
-  include_recipe "alfresco::logstash-forwarder"
+  include_recipe 'alfresco::logstash-forwarder'
 end
-
 
 if node['alfresco']['components'].include? 'activiti'
-  include_recipe "alfresco::activiti"
+  include_recipe 'alfresco::activiti'
 end
 
-# TODO - This should go... as soon as Alfresco Community NOSSL war is shipped
+# TODO: This should go... as soon as Alfresco Community NOSSL war is shipped
 # Patching web.xml to configure Alf-Solr comms to none (instead of https)
 #
-if node['alfresco']['components'].include? 'tomcat' and node['alfresco']['enable.web.xml.nossl.patch']
-  cookbook_file "/usr/local/bin/nossl-patch.sh" do
-    source "nossl-patch.sh"
-    mode "0755"
+if node['alfresco']['components'].include?('tomcat') && node['alfresco']['enable.web.xml.nossl.patch']
+  cookbook_file '/usr/local/bin/nossl-patch.sh' do
+    source 'nossl-patch.sh'
+    mode '0755'
   end
-  execute "run-nossl-patch.sh" do
-    command "/usr/local/bin/nossl-patch.sh"
-    user "root"
+  execute 'run-nossl-patch.sh' do
+    command '/usr/local/bin/nossl-patch.sh'
+    user 'root'
   end
 end
 
-
-
-
-
 # Restarting services, if enabled
-alfresco_start    = node["alfresco"]["start_service"]
-restart_services  = node['alfresco']['restart_services']
-restart_action    = node['alfresco']['restart_action']
-if alfresco_start and node['alfresco']['components'].include? 'tomcat'
+alfresco_start = node['alfresco']['start_service']
+restart_services = node['alfresco']['restart_services']
+restart_action = node['alfresco']['restart_action']
+if alfresco_start && node['alfresco']['components'].include?('tomcat')
   restart_services.each do |service_name|
     # => Fix file permissions
-    ["/var/cache/#{service_name}","/var/log/#{service_name}"].each do |service|
+    ["/var/cache/#{service_name}", "/var/log/#{service_name}"].each do |service|
       directory(service) do
-        owner "tomcat"
-        group "tomcat"
+        owner 'tomcat'
+        group 'tomcat'
         mode '0750'
         recursive true
       end
     end
 
-    service service_name  do
-      action    restart_action
+    service service_name do
+      action restart_action
     end
   end
 end

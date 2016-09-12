@@ -1,14 +1,14 @@
 # Artifact Deployer attributes
 node.default['artifacts']['share']['groupId'] = node['alfresco']['groupId']
-node.default['artifacts']['share']['artifactId'] = "share"
+node.default['artifacts']['share']['artifactId'] = 'share'
 node.default['artifacts']['share']['version'] = node['alfresco']['version']
-node.default['artifacts']['share']['type'] = "war"
+node.default['artifacts']['share']['type'] = 'war'
 node.default['artifacts']['share']['owner'] = node['alfresco']['user']
 node.default['artifacts']['share']['unzip'] = false
 
-node.default['artifacts']['hazelcast-cloud']['groupId'] = "com.hazelcast"
-node.default['artifacts']['hazelcast-cloud']['artifactId'] = "hazelcast-cloud"
-node.default['artifacts']['hazelcast-cloud']['version'] = "2.4"
+node.default['artifacts']['hazelcast-cloud']['groupId'] = 'com.hazelcast'
+node.default['artifacts']['hazelcast-cloud']['artifactId'] = 'hazelcast-cloud'
+node.default['artifacts']['hazelcast-cloud']['version'] = '2.4'
 node.default['artifacts']['hazelcast-cloud']['destination'] = node['alfresco']['shared_lib']
 node.default['artifacts']['hazelcast-cloud']['owner'] = node['alfresco']['user']
 
@@ -18,8 +18,8 @@ node.default['alfresco']['shareproperties']['alfresco.context'] = node['alfresco
 node.default['alfresco']['shareproperties']['alfresco.protocol'] = node['alfresco']['internal_protocol']
 node.default['alfresco']['shareproperties']['alfresco.port'] = node['alfresco']['internal_port']
 
-node.default['alfresco']['shareproperties']['referer'] = ".*"
-node.default['alfresco']['shareproperties']['origin'] = ".*"
+node.default['alfresco']['shareproperties']['referer'] = '.*'
+node.default['alfresco']['shareproperties']['origin'] = '.*'
 
 # if node['alfresco']['public_portssl'] != 443
 #   node.default['alfresco']['shareproperties']['referer'] = "https://#{node['alfresco']['public_hostname']}:#{node['alfresco']['public_portssl']}.*"

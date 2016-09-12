@@ -8,9 +8,9 @@ if node['alfresco']['components'].include? 'mysql'
   mysql_root_password = node['alfresco']['db']['server_root_password']
 
   mysql_connection_info = {
-      :host     => db_host,
-      :username => db_root_user,
-      :password => mysql_root_password
+    host: db_host,
+    username: db_root_user,
+    password: mysql_root_password
   }
 
   mysql_database db_database do
