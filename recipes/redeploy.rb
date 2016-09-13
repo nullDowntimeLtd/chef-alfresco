@@ -33,7 +33,7 @@ if node['alfresco']['components'].include? 'repo'
 
   if replace_property_map
     replace_property_map.each do |prop_name, prop_value|
-      replace_or_add "#{propName}-on-#{file_to_patch}" do
+      replace_or_add "#{prop_name}-on-#{file_to_patch}" do
         path file_to_patch
         pattern "#{prop_name}="
         line "#{prop_name}=#{prop_value}"
