@@ -1,5 +1,5 @@
-# TODO - build-essential shouldnt really be here. move it to default (or essentials.rb)
-include_recipe "build-essential::default"
+# TODO: build-essential shouldnt really be here. move it to default (or essentials.rb)
+include_recipe 'build-essential::default'
 
 if node['alfresco']['use_libreoffice_os_repo']
   if node['platform'] == 'redhat'
@@ -15,11 +15,11 @@ if node['alfresco']['use_libreoffice_os_repo']
     end
   end
   # Remove existing libreoffice installation
-  package "libreoffice" do
+  package 'libreoffice' do
     action :remove
   end
   # Install the version we specified in attributes
-  include_recipe "libreoffice::default"
+  include_recipe 'libreoffice::default'
 else
   libre_office_name = node['alfresco']['libre_office_name']
   libre_office_tar_name = node['alfresco']['libre_office_tar_name']
@@ -41,24 +41,24 @@ else
   execute 'install-libreoffice' do
     cwd Chef::Config[:file_cache_path]
     command "yum -y localinstall #{Chef::Config[:file_cache_path]}/#{libre_office_name}/RPMS/*.rpm"
-    not_if "yum list installed | grep libreoffice"
+    not_if 'yum list installed | grep libreoffice'
   end
 end
 
-if node['platform_family'] == "ubuntu"
-  include_recipe "ffmpeg::default"
-  include_recipe "swftools::default"
-elsif node['platform_family'] == "rhel"
+if node['platform_family'] == 'ubuntu'
+  include_recipe 'ffmpeg::default'
+  include_recipe 'swftools::default'
+elsif node['platform_family'] == 'rhel'
   install_fonts = node['alfresco']['install_fonts']
   exclude_font_packages = node['alfresco']['exclude_font_packages']
 
-  # TODO - implement it also for Ubuntu using apt-get
-  execute "install-all-fonts" do
+  # TODO: implement it also for Ubuntu using apt-get
+  execute 'install-all-fonts' do
     command "yum install -y *fonts.noarch --exclude='#{exclude_font_packages}'"
-    only_if { install_fonts and node['platform_family'] == "rhel" }
+    only_if { install_fonts && node['platform_family'] == 'rhel' }
   end
 
-  #Taken from https://www.centos.org/forums/viewtopic.php?f=48&t=50232
+  # Taken from https://www.centos.org/forums/viewtopic.php?f=48&t=50232
   bash 'install_swftools' do
     user 'root'
     cwd '/tmp'
@@ -70,7 +70,7 @@ elsif node['platform_family'] == "rhel"
     ./configure --libdir=/usr/lib64 --bindir=/usr/local/bin
     make && make install
     EOH
-    not_if "test -f /usr/local/bin/pdf2swf"
+    not_if 'test -f /usr/local/bin/pdf2swf'
     only_if { node['alfresco']['install_swftools'] }
   end
 end
@@ -79,20 +79,20 @@ imagemagick_path = "#{Chef::Config[:file_cache_path]}/#{node['alfresco']['imagem
 imagemagick_libs_path = "#{Chef::Config[:file_cache_path]}/#{node['alfresco']['imagemagick_libs_name']}"
 
 # Imagemagick OS repo installation
-if node['alfresco']['install_imagemagick'] and node['alfresco']['use_imagemagick_os_repo']
-  include_recipe "imagemagick::default"
+if node['alfresco']['install_imagemagick'] && node['alfresco']['use_imagemagick_os_repo']
+  include_recipe 'imagemagick::default'
 end
 
 # Imagemagick dependencies
 packages = [
-  "fftw",
-  "libXmu",
-  "urw-fonts",
-  "libwmf-lite",
-  "libtool-ltdl",
-  "ghostscript",
-  "poppler-data",
-  "ghostscript-fonts"
+  'fftw',
+  'libXmu',
+  'urw-fonts',
+  'libwmf-lite',
+  'libtool-ltdl',
+  'ghostscript',
+  'poppler-data',
+  'ghostscript-fonts'
 ]
 packages.each do |package|
   package package do
@@ -125,6 +125,6 @@ rpm_package imagemagick_path do
   not_if { node['alfresco']['use_imagemagick_os_repo'] }
 end
 
-package "perl-Image-ExifTool" do
+package 'perl-Image-ExifTool' do
   action :install
 end
