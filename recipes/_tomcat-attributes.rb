@@ -86,7 +86,7 @@ node.default['tomcat']['global_templates'] = [{
 }, {
   'dest' => '/etc/security/limits.d',
   'filename' => 'tomcat_limits.conf',
-  'owner' => 'tomca'
+  'owner' => 'tomcat'
 }]
 
 # Setting JAVA_OPTS
