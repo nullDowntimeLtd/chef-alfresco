@@ -1,7 +1,6 @@
 require 'spec_helper'
 
-
-# TODO Checks
+# TODO: Checks
 #
 # Check (some) folder permissions (@toni?)
 # Check iptables configuration (ports and IP blacklisting)
@@ -12,16 +11,16 @@ require 'spec_helper'
 # Check CMIS write/read
 # Check Nginx endpoint with certificate (generate certs for alfresco.test domain)
 
-# TODO CI
+# TODO: CI
 #
 # Configure Bamboo build to run kitchen converge && kitchen verify || kitchen converge && kitchen verify, avoid folder purging, run on commit; also check with kitchen list if any box is running; every friday evening, run a kitchen destroy && kitchen converge || kitchen converge
 
-services = ['tomcat-alfresco','tomcat-share','tomcat-solr','haproxy','nginx']
-yumrepos = ['epel','nginx']
+services = ['tomcat-alfresco', 'tomcat-share', 'tomcat-solr', 'haproxy', 'nginx']
+yumrepos = %w(epel nginx)
 
-# TODO - should be the FQDN, but still need to configure /etc/hosts to get this to work
+# TODO: should be the FQDN, but still need to configure /etc/hosts to get this to work
 # alfresco_host = "chef-alfresco-testing.alfresco.test"
-alfresco_host = "localhost"
+# alfresco_host = 'localhost'
 
 yumrepos.each do |yumrepo|
   describe yumrepo(yumrepo) do
@@ -29,14 +28,13 @@ yumrepos.each do |yumrepo|
   end
 end
 
-# TODO - this logic should be provided by another cookbook
+# TODO: this logic should be provided by another cookbook
 #
 # describe host(alfresco_host) do
 #   it { should be_resolvable.by('hosts') }
 # end
 
-describe "Alfresco daemons" do
-
+describe 'Alfresco daemons' do
   # Removing all the let *Connection tests, as they are classified as Validation testing, thus they don't have space in an integration test suite
   # Keeping them as memento to create future validation testing
 
@@ -58,7 +56,7 @@ describe "Alfresco daemons" do
 
   # The following tests are all  Validation testing, thus they don't have space in an integration test suite
   # Keeping them as memento to create future validation testing
-  
+
   # it 'Has a running Alfresco Repository application' do
   #   expect(repoConnection.get('/alfresco/').body).to include('Welcome to Alfresco')
   # end
@@ -83,7 +81,7 @@ describe "Alfresco daemons" do
   # it 'Has a running Haproxy service wrapping all Alfresco internal applications' do
   #   expect(haproxyIntConnection.get('/solr4/').body).to include('Apache SOLR')
   # end
-  # # TODO - add vti and root here
+  # # TODO: add vti and root here
   #
   # it 'Has a running Nginx service wrapping alfresco/share Haproxy endpoints' do
   #   expect(nginxConnection.get('/alfresco/').body).to include('Welcome to Alfresco')
@@ -95,11 +93,11 @@ describe "Alfresco daemons" do
   #   expect(nginxConnection.get('/share/page/').body).to include('Alfresco Software Inc. All rights reserved. Simple + Smart')
   # end
 
- # it 'Has a running Nginx service wrapping /activiti Haproxy endpoints' do
- #    expect(nginxConnection.get('/activiti/').body).to include('Activiti')
- #  end
+  # it 'Has a running Nginx service wrapping /activiti Haproxy endpoints' do
+  #    expect(nginxConnection.get('/activiti/').body).to include('Activiti')
+  # end
 
-  # TODO - uncomment this!
+  # TODO: uncomment this!
   # it 'Has an HTTP redirect' do
   #   expect(httpNginxConnection.get('/').status).to eq 302
   # end
@@ -123,7 +121,7 @@ describe "Alfresco daemons" do
   # end
 end
 
-# TODO - Rsyslog files for haproxy
+# TODO: Rsyslog files for haproxy
 # describe file('/var/log/haproxy/haproxy.log') do
 #   it { should exist }
 # end
@@ -137,7 +135,7 @@ end
 #   it { should exist }
 # end
 
-# TODO - not working
+# TODO: not working
 #
 # -A INPUT -p tcp --dport 80 -j ACCEPT
 # -A INPUT -p tcp --dport 443 -j ACCEPT
@@ -150,7 +148,7 @@ end
 #   it { should have_rule("-A INPUT -p tcp --dport 80 -j ACCEPT") }
 # end
 
-# TODO - not working
+# TODO: not working
 #
 # describe cron do
 #   it { should have_entry '*/30 * * * * root find #{node['tomcat']['cache_root_folder']}/tomcat-alfresco -mmin +30 -type f -exec rm -rf {} \;' }
@@ -158,7 +156,7 @@ end
 #   it { should have_entry '*/30 * * * * root find #{node['tomcat']['cache_root_folder']}/tomcat-solr -mmin +30 -type f -exec rm -rf {} \;' }
 # end
 
-# TODO - Check that new location is correct (https); none of the approaches work!
+# TODO: Check that new location is correct (https); none of the approaches work!
 #
 # describe http_get(80, 'img-alfresco-test.alfresco.me', '/') do
 #   its(:headers) { should include('Location' => /img-alfresco-test/) }
