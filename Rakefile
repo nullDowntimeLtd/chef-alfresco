@@ -1,25 +1,29 @@
-
 #!/usr/bin/env rake
 
 require 'foodcritic'
 require 'rspec/core/rake_task'
 
-desc "Runs knife cookbook test"
+desc 'Runs knife cookbook test'
 task :knife do
-  sh "bundle exec knife cookbook test cookbook -o ./ -a"
+  sh 'bundle exec knife cookbook test cookbook -o ./ -a'
 end
 
-desc "Runs foodcritic test"
+desc 'Runs foodcritic test'
 task :foodcritic do
   FoodCritic::Rake::LintTask.new
-  sh "bundle exec foodcritic -f any ."
+  sh 'bundle exec foodcritic -f any .'
 end
 
-desc "Runs rspec tests in test/unit folder"
+desc 'Runs rspec tests in test/unit folder'
 task :unit do
   RSpec::Core::RakeTask.new(:unit) do |t|
-    t.pattern = "test/unit/**/*_spec.rb"
+    t.pattern = 'test/unit/**/*_spec.rb'
   end
+end
+
+desc 'Runs rubocop linter'
+task :rubocop do
+  sh 'rubocop'
 end
 
 desc 'Run Test Kitchen integration tests'
@@ -60,4 +64,4 @@ namespace :integration do
   end
 end
 
-task :default => [ :foodcritic, :knife, :unit ]
+task default: [:foodcritic, :knife, :unit, :rubocop]

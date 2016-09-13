@@ -1,6 +1,6 @@
 # Artifact deployer attributes
 node.default['artifacts']['solrhome']['groupId'] = node['alfresco']['groupId']
-node.default['artifacts']['solrhome']['artifactId'] = "alfresco-solr4"
+node.default['artifacts']['solrhome']['artifactId'] = 'alfresco-solr4'
 node.default['artifacts']['solrhome']['version'] = node['alfresco']['version']
 node.default['artifacts']['solrhome']['destination'] = node['alfresco']['properties']['dir.root']
 node.default['artifacts']['solrhome']['owner'] = node['alfresco']['user']

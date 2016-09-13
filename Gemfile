@@ -21,3 +21,8 @@ group :vagrant do
   gem 'vagrant-wrapper', '~> 2.0'
   gem 'kitchen-vagrant', '~> 0.18'
 end
+
+group :development do
+  gem 'guard', '~> 2.0.0'
+  gem 'guard-rubocop', '~> 1.2.0'
+end

@@ -14,9 +14,9 @@ default['alfresco']['workspace-solrproperties']['enable.alfresco.tracking'] = tr
 default['alfresco']['workspace-solrproperties']['alfresco.index.transformContent'] = true
 default['alfresco']['workspace-solrproperties']['alfresco.version'] = node['alfresco']['version']
 default['alfresco']['workspace-solrproperties']['alfresco.cron'] = '0/15 * * * * ? *'
-default['alfresco']['workspace-solrproperties']['alfresco.lag'] = 1000
-default['alfresco']['workspace-solrproperties']['alfresco.hole.retention'] = 3600000
-default['alfresco']['workspace-solrproperties']['alfresco.batch.count'] = 1000
+default['alfresco']['workspace-solrproperties']['alfresco.lag'] = 100_0
+default['alfresco']['workspace-solrproperties']['alfresco.hole.retention'] = 360_000_0
+default['alfresco']['workspace-solrproperties']['alfresco.batch.count'] = 100_0
 
 # Tracking
 default['alfresco']['workspace-solrproperties']['alfresco.enableMultiThreadedTracking'] = true
