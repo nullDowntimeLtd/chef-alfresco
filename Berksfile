@@ -11,4 +11,7 @@ cookbook 'commons', git: 'https://github.com/Alfresco/chef-commons.git'
 cookbook 'database', git: 'https://github.com/enzor/database.git'
 # cookbook 'commons', path: '../chef-commons'
 
+# cookbook 'artifact-deployer', git: 'git@github.com:enzor/artifact-deployer.git', tag: 'v0.8.19'
+cookbook 'artifact-deployer', git: 'git@github.com:nullDowntimeLtd/artifact-deployer.git'
+
 metadata
